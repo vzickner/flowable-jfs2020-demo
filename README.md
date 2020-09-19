@@ -1,8 +1,9 @@
 # Flowable JFS2020: Modern Could-Based Process Architectures 
 
-This repository includes everything for the talk [Modern Cloud Process Architecture]().
-There are two modes for the setup, you can either use the Enterprise Trial or the OSS version.
-Both setups are docker based and described below.
+This repository includes everything for the talk [Modern Cloud-Based Process Architecture](https://www.java-forum-stuttgart.de/de/Slot+6+2020.html#A6).
+The default mode is to use the Flowable Trial, or another Enterprise installation if available.
+In theory it's possible to use Flowable OSS as well.
+For the OSS usage there is a [work in progress branch](https://github.com/vzickner/flowable-jfs2020-demo/tree/oss) in this repository.
 
 ## Enterprise Trial Setup
 
@@ -54,7 +55,7 @@ Both setups are docker based and described below.
    On the dialog select then the green "Import an app from a file" button:
    ![Import app](images/02-import-app.png)
    
-   Now drag and drop or select the [Digital_Fitness_Center-Enterprise.zip](apps/Digitial_Fitness_Center-Enterprise.zip) file from the `apps/` folder.
+   Now drag and drop or select the [Digital_Fitness_Center-Enterprise.zip](apps/Digital_Fitness_Center-Enterprise.zip) file from the `apps/` folder.
    The upload will take a few seconds until you see the imported application:
    ![Fitness Center App](images/03-fitness-center-app.png)
    
