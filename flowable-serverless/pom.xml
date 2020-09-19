@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>flowable-jfs2020-demo</artifactId>
+        <groupId>com.example</groupId>
+        <version>3.7.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>flowable-serverless</artifactId>
+
+    <properties>
+        <!-- Skip deployment of the sample -->
+        <maven.deploy.skip>true</maven.deploy.skip>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+
+        <org.flowable.version>6.4.0</org.flowable.version>
+        <javapoet.version>1.11.1</javapoet.version>
+        <junit.version>5.3.2</junit.version>
+        <xmlunit.version>2.6.2</xmlunit.version>
+
+        <flowable.experimental.version>6.5.0-SNAPSHOT</flowable.experimental.version>
+        <flowable.version>6.5.1.27</flowable.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.flowable.experimental</groupId>
+                <artifactId>flowable-processor-annotations</artifactId>
+                <version>${flowable.experimental.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.flowable.experimental</groupId>
+                <artifactId>flowable-processor</artifactId>
+                <version>${flowable.experimental.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.flowable.experimental</groupId>
+                <artifactId>flowable-serverless</artifactId>
+                <version>${flowable.experimental.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.flowable</groupId>
+                <artifactId>flowable-bpmn-model</artifactId>
+                <version>${org.flowable.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.flowable</groupId>
+                <artifactId>flowable-bpmn-converter</artifactId>
+                <version>${org.flowable.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.flowable</groupId>
+                <artifactId>flowable-engine</artifactId>
+                <version>${org.flowable.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.flowable</groupId>
+                <artifactId>flowable-http</artifactId>
+                <version>${org.flowable.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.squareup</groupId>
+                <artifactId>javapoet</artifactId>
+                <version>${javapoet.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>${junit.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.xmlunit</groupId>
+                <artifactId>xmlunit-assertj</artifactId>
+                <version>${xmlunit.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>org.flowable.sample.ServerlessApplication</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.flowable.experimental</groupId>
+            <artifactId>flowable-processor-annotations</artifactId>
+            <version>${flowable.experimental.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.flowable.experimental</groupId>
+            <artifactId>flowable-processor</artifactId>
+            <version>${flowable.experimental.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.flowable.experimental</groupId>
+            <artifactId>flowable-serverless</artifactId>
+            <version>${flowable.experimental.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.flowable</groupId>
+            <artifactId>flowable-engine</artifactId>
+            <version>${flowable.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.flowable</groupId>
+            <artifactId>flowable-bpmn-model</artifactId>
+            <version>${flowable.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.flowable</groupId>
+            <artifactId>flowable-event-registry-spring</artifactId>
+            <version>${flowable.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-jaxb-annotations</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

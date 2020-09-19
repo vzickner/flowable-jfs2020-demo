@@ -1,0 +1,135 @@
+version: '3.4'
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.7.1
+    environment:
+      - discovery.type=single-node
+      - node.name=flowable-node
+      - cluster.name=flowable-cluster
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    networks:
+      - internal
+    ports:
+      - 9300:9300
+      - 9200:9200
+    volumes:
+      - elastic:/usr/share/elasticsearch/data
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:5.5.1
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_SYNC_LIMIT: 2
+    networks:
+      - internal
+    ports:
+      - 2181:2181
+      - 2888:2888
+      - 3888:3888
+
+  kafka:
+    image: confluentinc/cp-kafka:5.5.1
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    networks:
+      - internal
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_BROKER_ID: "2"
+      KAFKA_ADVERTISED_HOST_NAME: "kafka"
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  activemq:
+    image: rmohr/activemq:5.15.9
+    networks:
+      - internal
+    ports:
+      - 61616:61616
+      - 61613:61613
+      - 8161:8161
+
+  design:
+    image: openjdk:8-jdk-alpine
+    networks:
+      - internal
+    ports:
+      - 8888:8888
+    environment:
+      SERVER_PORT: 8888
+      SERVER_SERVLET_SESSION_TIMEOUT: 1h
+      SERVER_SERVLET_CONTEXT-PATH: /
+      SPRING_DATASOURCE_URL: jdbc:h2:file:/h2/database.db
+      LOGGING_FILE: flowable-design.log
+      FLOWABLE_MODELER_APP_DEPLOYMENT-API-URL: http://engage:8080/app-api
+      FLOWABLE_COMMON_APP_IDM-URL: http://flowable-engage:8080
+      FLOWABLE_MODELER_APP_LICENSE-LOCATION: file:/license/flowable.license
+    volumes:
+      - ./enterprise-trial/webapps:/apps/
+      - ./enterprise-trial/license:/license/
+      - design:/h2
+    entrypoint: [ "java", "-jar", "/apps/flowable-design.war" ]
+
+  engage:
+    image: openjdk:8-jdk-alpine
+    networks:
+      - internal
+    ports:
+      - 8080:8080
+    environment:
+      SERVER_PORT: 8080
+      SERVER_SERVLET_SESSION_TIMEOUT: 1h
+      SERVER_SERVLET_CONTEXT-PATH: /
+      SPRING_DATASOURCE_URL: jdbc:h2:file:/h2/database.db
+      FLOWABLE_INDEXING_ELASTICSEARCHADDRESSES: http://elasticsearch:9200
+      APPLICATION_KAFKA-ENABLED: "true"
+      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9092
+      SPRING_ACTIVEMQ_BROKER-URL: tcp://activemq:61616
+      FLOWABLE_WEBSOCKET_STOMP-BROKER-ADDRESSES: activemq:61613
+      LOGGING_FILE: flowable-engage.log
+      FLOWABLE_LICENSE_LOCATION: file:/license/flowable.license
+    volumes:
+      - ./enterprise-trial/webapps:/apps/
+      - ./enterprise-trial/license:/license/
+      - engage:/h2
+    entrypoint: [ "java", "-jar", "/apps/flowable-engage.war" ]
+    depends_on:
+      - kafka
+      - elasticsearch
+
+  control:
+    image: openjdk:8-jdk-alpine
+    networks:
+      - internal
+    ports:
+      - 9988:9988
+    environment:
+      SERVER_PORT: 9988
+      SERVER_SERVLET_SESSION_TIMEOUT: 1h
+      SERVER_SERVLET_CONTEXT-PATH: /
+      SPRING_DATASOURCE_URL: jdbc:h2:file:/h2/database.db
+      FLOWABLE_CONTROL_APP_CLUSTER-CONFIG_NAME: Default Cluster
+      FLOWABLE_CONTROL_APP_CLUSTER-CONFIG_DESCRIPTION: Default Flowable Cluster
+      FLOWABLE_CONTROL_APP_CLUSTER-CONFIG_SERVER-ADDRESS: http://engage
+      FLOWABLE_CONTROL_APP_CLUSTER-CONFIG_PORT: 8080
+      FLOWABLE_CONTROL_APP_CLUSTER-CONFIG_CONTEXT-ROOT: /
+    volumes:
+      - ./enterprise-trial/webapps:/apps/
+      - control:/h2
+    entrypoint: [ "java", "-jar", "/apps/flowable-control.war" ]
+
+
+networks:
+  internal:
+
+volumes:
+  elastic:
+  design:
+  engage:
+  control:

@@ -1,0 +1,17 @@
+[
+  {
+    "name": "org.flowable.sample.delegate.ValidateCardJavaDelegate",
+    "allDeclaredConstructors" : true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "org.flowable.sample.delegate.ReturnCardJavaDelegate",
+    "allDeclaredConstructors" : true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "org.flowable.sample.delegate.ShowCardInvalidJavaDelegate",
+    "allDeclaredConstructors" : true,
+    "allDeclaredMethods": true
+  }
+]

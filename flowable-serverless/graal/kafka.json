@@ -1,0 +1,17 @@
+[
+  {
+    "name": "org.apache.kafka.clients.producer.internals.DefaultPartitioner",
+    "allDeclaredConstructors" : true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "org.apache.kafka.common.serialization.StringSerializer",
+    "allDeclaredConstructors" : true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "org.springframework.kafka.support.serializer.JsonSerializer",
+    "allDeclaredConstructors" : true,
+    "allDeclaredMethods": true
+  }
+]

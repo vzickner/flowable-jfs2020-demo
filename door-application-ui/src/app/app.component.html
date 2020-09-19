@@ -1,0 +1,15 @@
+<div class="content">
+  <div class="left">
+    <mat-card *ngFor="let message of (messageListSubject | async)">
+      <mat-card-title>{{ message.topic }}</mat-card-title>
+      <mat-card-subtitle>{{ message.date }}</mat-card-subtitle>
+      <mat-card-content>
+        <pre>{{ message.content }}</pre>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="right">
+    <img [src]="'assets/' + (door | async)" alt="Door Close" /><br />
+    <span style="color: lightgrey">(source https://www.oxgard.ru/images/PRODUCT/t-10m/gif/t-10.gif)</span>
+  </div>
+</div>
