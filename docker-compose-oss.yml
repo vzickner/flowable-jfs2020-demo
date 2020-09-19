@@ -1,0 +1,45 @@
+version: '3.4'
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:5.5.1
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_SYNC_LIMIT: 2
+    networks:
+      - internal
+    ports:
+      - 2181:2181
+      - 2888:2888
+      - 3888:3888
+
+  kafka:
+    image: confluentinc/cp-kafka:5.5.1
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    networks:
+      - internal
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_BROKER_ID: "2"
+      KAFKA_ADVERTISED_HOST_NAME: "kafka"
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  flowable:
+    image: flowable/all-in-one:6.5.0
+    networks:
+      - internal
+    ports:
+      - 8080:8080
+    volumes:
+      - ./oss/application.properties:/opt/tomcat/lib/application.properties
+      - ./oss/eventregistry/:/opt/tomcat/resources/eventregistry/
+    depends_on:
+      - kafka
+
+
+networks:
+  internal:

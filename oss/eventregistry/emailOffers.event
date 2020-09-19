@@ -1,0 +1,10 @@
+{
+  "name": "Email Offers",
+  "key": "emailOffers",
+  "payload": [
+    {
+      "name": "customerId",
+      "type": "string"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Gate Outbound Channel",
+  "key": "gateOutboundChannel",
+  "type": "kafka",
+  "channelType": "outbound",
+  "serializerType": "json",
+  "topic": "gate-action-topic"
+}

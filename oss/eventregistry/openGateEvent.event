@@ -1,0 +1,14 @@
+{
+  "name": "Open Gate Event",
+  "key": "openGateEvent",
+  "payload": [
+    {
+      "name": "gateId",
+      "type": "string"
+    },
+    {
+      "name": "status",
+      "type": "string"
+    }
+  ]
+}

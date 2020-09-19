@@ -1,0 +1,24 @@
+{
+  "name": "Card Scan Event",
+  "key": "cardScanEvent",
+  "payload": [
+    {
+      "name": "cardId",
+      "type": "string"
+    },
+    {
+      "name": "customerId",
+      "type": "string"
+    },
+    {
+      "name": "gateId",
+      "type": "string"
+    }
+  ],
+  "correlationParameters": [
+    {
+      "name": "customerId",
+      "type": "string"
+    }
+  ]
+}

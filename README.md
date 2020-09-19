@@ -1,7 +1,7 @@
 # Flowable JFS2020: Modern Could-Based Process Architectures 
 
 This repository includes everything for the talk [Modern Cloud Process Architecture]().
-There are two modes for the setup, you can either use the Enterprise Trial or the OSS version.
+There are two modes for the setup, you can either use the [Enterprise Trial](#enterprise-trial-setup) or the [OSS version](#open-source-setup).
 Both setups are docker based and described below.
 
 ## Enterprise Trial Setup
@@ -64,7 +64,11 @@ Both setups are docker based and described below.
    You can go to the [Flowable Engage application](http://localhost:8080) which is handling the case execution.
    After login with the username `admin` and the password `test` you can select in the menu `Work` and then `Open`.
    Here you are going to see your members once you triggered the first case.
-   For trigger the event, please continue with the setup described in the next section.
+   For trigger the event, please continue with the setup described in the section about the [serverless application](#setup-and-trigger-event-with-serverless-application).
+
+## Open Source Setup
+
+
 
 ## Setup and Trigger Event with Serverless Application
 

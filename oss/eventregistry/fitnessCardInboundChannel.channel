@@ -1,0 +1,14 @@
+{
+  "name": "Fitness Card Inbound Channel",
+  "key": "fitnessCardInboundChannel",
+  "type": "kafka",
+  "channelType": "inbound",
+  "deserializerType": "json",
+  "topics": [
+    "card-scanned-topic"
+  ],
+  "groupId": "flowable",
+  "channelEventKeyDetection": {
+    "fixedValue": "cardScanEvent"
+  }
+}
